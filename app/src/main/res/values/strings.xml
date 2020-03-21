@@ -13,4 +13,16 @@
 
     <string name="home_second">Home Second</string>
     <string name="login">Login</string>
+    <string name="register">Register</string>
+
+    <string name="forgot_your_password" translatable="false">Forgot your password?</string>
+    <string name="password" translatable="false">Password</string>
+    <string name="user_name_or_e_mail_address" translatable="false">E-mail address</string>
+
+    <string name="google" translatable="false">Google</string>
+    <string name="facebook" translatable="false">Facebook</string>
+    <string name="terms_and_conditions" translatable="false"><![CDATA[By Signing in to this app you agree to the <a href=\'https://www.google.com\'>MwalimuApp Terms of Service</a> and <a href=\'#\'>Privacy Policy.</a>]]></string>
+    <string name="confirm_password" translatable="false">Confirm Password</string>
+    <string name="register_with">Register with</string>
+
 </resources>

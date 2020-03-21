@@ -1,7 +1,7 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <!-- Base mContext theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -16,5 +16,36 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="ButtonPrimaryCornered">
+        <item name="android:background">@drawable/button_ui_corner_primary</item>
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
+
+    <style name="ButtonPrimaryRounded" parent="Base.Widget.AppCompat.Button">
+        <item name="android:background">@drawable/button_rounded_ui_primary</item>
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
+
+    <style name="FacebookButton" parent="Base.Widget.AppCompat.Button">
+        <item name="android:background">@drawable/button_ui_fb_cornered</item>
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
+
+    <style name="GoogleButton" parent="Base.Widget.AppCompat.Button">
+        <item name="android:background">@drawable/button_ui_google_cornered</item>
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
+
+
+
+    <style name="ButtonPrimaryCorneredStroked" parent="Base.Widget.AppCompat.Button">
+        <item name="android:background">@drawable/button_ui_corner_primary_stroked</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
+    <style name="RatingBar" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@color/colorDivider</item>
+        <item name="colorControlActivated">@color/colorPrimaryText</item>
+    </style>
 
 </resources>

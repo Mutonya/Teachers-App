@@ -1,15 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/accounts_navigation"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@+id/nav_fragment_login"
-    >
-<fragment android:id="@+id/nav_fragment_login"
-    android:name="com.hudutech.kcpeteacherapp.ui.accounts.LoginFragment"
-    android:label="@string/login"
-    tools:layout="@layout/login_fragment">
-</fragment>
+    android:id="@+id/accounts_navigation"
+    app:startDestination="@+id/nav_login">
+    <fragment
+        android:id="@+id/nav_login"
+        android:name="com.hudutech.kcpeteacherapp.ui.accounts.LoginFragment"
+        android:label="@string/login"
+        tools:layout="@layout/login_fragment">
+
+        <action
+            android:id="@+id/action_nav_login_to_nav_register"
+            app:destination="@id/nav_register"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_nav_login_to_profileFragment"
+            app:destination="@id/profileFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_nav_login_to_accountPendingFragment"
+            app:destination="@id/accountPendingFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_register"
+        android:name="com.hudutech.kcpeteacherapp.ui.accounts.RegisterFragment"
+        android:label="@string/register"
+        tools:layout="@layout/register_fragment">
+        <action
+            android:id="@+id/action_nav_register_to_profileFragment"
+            app:destination="@id/profileFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_nav_register_to_accountPendingFragment"
+            app:destination="@id/accountPendingFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.hudutech.kcpeteacherapp.ui.accounts.ProfileFragment"
+        android:label="profile_fragment"
+        tools:layout="@layout/profile_fragment"
+
+        />
+    <fragment
+        android:id="@+id/accountPendingFragment"
+        android:name="com.hudutech.kcpeteacherapp.ui.accounts.AccountPendingFragment"
+        android:label="account_pending_fragment"
+        tools:layout="@layout/account_pending_fragment" />
 
 
 </navigation>
