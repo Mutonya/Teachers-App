@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/accounts_navigation"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@+id/nav_fragment_login"
+    >
+<fragment android:id="@+id/nav_fragment_login"
+    android:name="com.hudutech.kcpeteacherapp.ui.accounts.LoginFragment"
+    android:label="@string/login"
+    tools:layout="@layout/login_fragment">
+</fragment>
+
+
+</navigation>
