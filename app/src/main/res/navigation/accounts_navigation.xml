@@ -8,47 +8,20 @@
         android:id="@+id/nav_login"
         android:name="com.hudutech.kcpeteacherapp.ui.accounts.LoginFragment"
         android:label="@string/login"
-        tools:layout="@layout/login_fragment">
 
+        tools:layout="@layout/login_fragment">
         <action
-            android:id="@+id/action_nav_login_to_nav_register"
-            app:destination="@id/nav_register"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
-        <action
+            app:popUpTo="@id/nav_login"
+            app:popUpToInclusive="true"
             android:id="@+id/action_nav_login_to_profileFragment"
-            app:destination="@id/profileFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
-        <action
-            android:id="@+id/action_nav_login_to_accountPendingFragment"
-            app:destination="@id/accountPendingFragment" />
+            app:destination="@id/profileFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/nav_register"
         android:name="com.hudutech.kcpeteacherapp.ui.accounts.RegisterFragment"
         android:label="@string/register"
-        tools:layout="@layout/register_fragment">
-        <action
-            android:id="@+id/action_nav_register_to_profileFragment"
-            app:destination="@id/profileFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
-        <action
-            android:id="@+id/action_nav_register_to_accountPendingFragment"
-            app:destination="@id/accountPendingFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
-    </fragment>
+        tools:layout="@layout/register_fragment"/>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.hudutech.kcpeteacherapp.ui.accounts.ProfileFragment"

@@ -13,23 +13,30 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.hudutech.kcpeteacherapp.models.TeacherProfile;
+
+import java.util.Objects;
 
 public class AuthRepository {
     private static AuthRepository instance;
     private Application mApplication;
-    private FirebaseAuth mAuth;
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private FirebaseFirestore firestore = FirebaseFirestore.getInstance();
 
     private MutableLiveData<String> successMsg = new MutableLiveData<>();
     private MutableLiveData<String> errorMsg = new MutableLiveData<>();
     private MutableLiveData<Boolean> isLoading = new MutableLiveData<>();
+    private MutableLiveData<Boolean> profileExists = new MutableLiveData<>();
     private MutableLiveData<FirebaseUser> mCurrentUser = new MutableLiveData<>();
+
 
     public static synchronized AuthRepository getInstance(Application application) {
         if (instance == null) {
             instance = new AuthRepository();
             instance.mApplication = application;
-            instance.mAuth = FirebaseAuth.getInstance();
-            instance.mCurrentUser.setValue(instance.mAuth.getCurrentUser());
+
         }
 
         return instance;
@@ -41,8 +48,10 @@ public class AuthRepository {
         successMsg.postValue("");
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
-                    isLoading.postValue(false);
+
                     if (task.isSuccessful()) {
+                        checkProfile();
+                        isLoading.postValue(false);
                         successMsg.postValue("Login Successful.");
                         mCurrentUser.postValue(mAuth.getCurrentUser());
 
@@ -65,14 +74,16 @@ public class AuthRepository {
         AuthCredential credential = FacebookAuthProvider.getCredential(accessToken.getToken());
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(task -> {
-                    isLoading.postValue(false);
-                    if (task.isSuccessful()) {
 
+                    if (task.isSuccessful()) {
+                        checkProfile();
+                        isLoading.postValue(false);
                         successMsg.postValue("Login Successful");
                         mCurrentUser.postValue(mAuth.getCurrentUser());
 
 
                     } else {
+                        isLoading.postValue(false);
                         String message = "Authentication Failed.";
 
                         errorMsg.postValue(message);
@@ -93,16 +104,34 @@ public class AuthRepository {
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
+                        checkProfile();
                         isLoading.postValue(false);
                         successMsg.postValue("Login Successful");
                         mCurrentUser.postValue(mAuth.getCurrentUser());
 
                     } else {
-
+                        isLoading.postValue(false);
                         String message = "Authentication Failed.";
                         errorMsg.postValue(message);
                     }
                 });
+    }
+
+
+    public void checkProfile(){
+
+        DocumentReference mRef = firestore.collection("profiles").document(Objects.requireNonNull(mAuth.getCurrentUser()).getUid());
+        mRef.get().addOnSuccessListener(documentSnapshot -> {
+            TeacherProfile profile = documentSnapshot.toObject(TeacherProfile.class);
+            if (profile != null) {
+                profileExists.postValue(true);
+            } else {
+                profileExists.postValue(false);
+            }
+        }).addOnFailureListener(e -> {
+            profileExists.postValue(false);
+        });
+
     }
 
 
@@ -116,6 +145,10 @@ public class AuthRepository {
 
     public MutableLiveData<Boolean> getIsLoading() {
         return isLoading;
+    }
+
+    public MutableLiveData<Boolean> getProfileExists() {
+        return profileExists;
     }
 
     public LiveData<FirebaseUser> getCurrentUser() {

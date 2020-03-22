@@ -19,6 +19,7 @@ public class LoginViewModel extends AndroidViewModel implements LoginMethods {
     private MutableLiveData<String> errorMsg;
     private MutableLiveData<Boolean> isLoading;
     private LiveData<FirebaseUser> mCurrentUser;
+    private LiveData<Boolean> hasProfile;
 
     public LoginViewModel(@NonNull Application application) {
         super(application);
@@ -27,6 +28,8 @@ public class LoginViewModel extends AndroidViewModel implements LoginMethods {
         errorMsg = repository.getErrorMsg();
         isLoading = repository.getIsLoading();
         mCurrentUser = repository.getCurrentUser();
+        hasProfile = repository.getProfileExists();
+
     }
 
 
@@ -59,6 +62,10 @@ public class LoginViewModel extends AndroidViewModel implements LoginMethods {
 
     public LiveData<FirebaseUser> getCurrentUser() {
         return mCurrentUser;
+    }
+
+    public LiveData<Boolean> getHasProfile() {
+        return hasProfile;
     }
 
     public void resetValues() {
