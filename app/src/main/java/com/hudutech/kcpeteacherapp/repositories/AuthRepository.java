@@ -2,6 +2,7 @@ package com.hudutech.kcpeteacherapp.repositories;
 
 import android.app.Application;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.facebook.AccessToken;
@@ -10,6 +11,7 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
 public class AuthRepository {
@@ -20,12 +22,14 @@ public class AuthRepository {
     private MutableLiveData<String> successMsg = new MutableLiveData<>();
     private MutableLiveData<String> errorMsg = new MutableLiveData<>();
     private MutableLiveData<Boolean> isLoading = new MutableLiveData<>();
+    private MutableLiveData<FirebaseUser> mCurrentUser = new MutableLiveData<>();
 
     public static synchronized AuthRepository getInstance(Application application) {
         if (instance == null) {
             instance = new AuthRepository();
             instance.mApplication = application;
             instance.mAuth = FirebaseAuth.getInstance();
+            instance.mCurrentUser.setValue(instance.mAuth.getCurrentUser());
         }
 
         return instance;
@@ -40,6 +44,7 @@ public class AuthRepository {
                     isLoading.postValue(false);
                     if (task.isSuccessful()) {
                         successMsg.postValue("Login Successful.");
+                        mCurrentUser.postValue(mAuth.getCurrentUser());
 
                     } else {
                         String error = "Unable to Authenticate. please try again later";
@@ -53,7 +58,7 @@ public class AuthRepository {
                 });
     }
 
-    public void loginWithFacebook(AccessToken accessToken){
+    public void loginWithFacebook(AccessToken accessToken) {
         isLoading.postValue(true);
         errorMsg.postValue("");
         successMsg.postValue("");
@@ -63,7 +68,8 @@ public class AuthRepository {
                     isLoading.postValue(false);
                     if (task.isSuccessful()) {
 
-                     successMsg.postValue("Login Successful");
+                        successMsg.postValue("Login Successful");
+                        mCurrentUser.postValue(mAuth.getCurrentUser());
 
 
                     } else {
@@ -79,7 +85,7 @@ public class AuthRepository {
     }
 
 
-    public  void loginWithGoogle(GoogleSignInAccount account){
+    public void loginWithGoogle(GoogleSignInAccount account) {
         isLoading.postValue(true);
         errorMsg.postValue("");
         successMsg.postValue("");
@@ -88,7 +94,9 @@ public class AuthRepository {
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         isLoading.postValue(false);
-                       successMsg.postValue("Login Successful");
+                        successMsg.postValue("Login Successful");
+                        mCurrentUser.postValue(mAuth.getCurrentUser());
+
                     } else {
 
                         String message = "Authentication Failed.";
@@ -108,5 +116,15 @@ public class AuthRepository {
 
     public MutableLiveData<Boolean> getIsLoading() {
         return isLoading;
+    }
+
+    public LiveData<FirebaseUser> getCurrentUser() {
+        return mCurrentUser;
+    }
+
+    public void resetValues() {
+        errorMsg.postValue("");
+        successMsg.postValue("");
+        isLoading.postValue(false);
     }
 }
