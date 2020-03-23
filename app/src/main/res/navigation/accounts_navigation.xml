@@ -15,6 +15,9 @@
             app:popUpToInclusive="true"
             android:id="@+id/action_nav_login_to_profileFragment"
             app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_nav_login_to_nav_register"
+            app:destination="@id/nav_register" />
     </fragment>
 
     <fragment
@@ -23,6 +26,7 @@
         android:label="@string/register"
         tools:layout="@layout/register_fragment">
         <action
+            app:popUpToInclusive="true"
             android:id="@+id/action_nav_register_to_profileFragment"
             app:destination="@id/profileFragment" />
     </fragment>

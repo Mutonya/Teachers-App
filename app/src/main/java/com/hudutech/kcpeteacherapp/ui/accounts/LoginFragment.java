@@ -89,14 +89,15 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         mBinding.btnLogin.setOnClickListener(this);
         mBinding.btnFacebook.setOnClickListener(this);
         mBinding.btnGoogle.setOnClickListener(this);
+        mBinding.tvDontHaveAccount.setOnClickListener(this);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
-        mViewModel.getSuccessMsg().observe(getViewLifecycleOwner(), s -> {
-            if (!s.isEmpty()) {
+        mViewModel.getCurrentUser().observe(getViewLifecycleOwner(), mCurrentUser -> {
+            if (mCurrentUser != null) {
                 mViewModel.getHasProfile().observe(getViewLifecycleOwner(), aBoolean -> {
                     if (aBoolean) {
                         mViewModel.resetValues();
@@ -202,6 +203,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
             }
         } else if (id == R.id.btn_google) {
             openGoogleAccountChooser();
+        } else if (id == R.id.tv_dont_have_account) {
+            navController.navigate(R.id.action_nav_login_to_nav_register);
         }
     }
 
