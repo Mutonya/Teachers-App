@@ -103,7 +103,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         mViewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
         mViewModel.getCurrentUser().observe(getViewLifecycleOwner(), mCurrentUser -> {
             if (mCurrentUser != null) {
-                mViewModel.getHasProfile().observe(getViewLifecycleOwner(), aBoolean -> {
+                mViewModel.getHasActiveProfile().observe(getViewLifecycleOwner(), aBoolean -> {
                     if (aBoolean) {
                         mViewModel.resetValues();
                         startActivity(new Intent(requireActivity(), MainActivity.class));
@@ -114,6 +114,19 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                     }
                 });
 
+
+                mViewModel.getHasPendingProfile().observe(getViewLifecycleOwner(), aBoolean -> {
+                    if (aBoolean) {
+                       navController.navigate(R.id.action_nav_login_to_accountPendingFragment);
+
+                    }
+                });
+
+                mViewModel.getHasNoProfile().observe(getViewLifecycleOwner(), aBoolean -> {
+                    if (aBoolean) {
+                        navController.navigate(R.id.action_nav_login_to_profileFragment);
+                    }
+                });
 
             }
         });

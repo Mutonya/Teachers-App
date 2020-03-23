@@ -11,13 +11,16 @@
 
         tools:layout="@layout/login_fragment">
         <action
-            app:popUpTo="@id/nav_login"
-            app:popUpToInclusive="true"
             android:id="@+id/action_nav_login_to_profileFragment"
-            app:destination="@id/profileFragment" />
+            app:destination="@id/profileFragment"
+            app:popUpTo="@id/nav_login"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_nav_login_to_nav_register"
             app:destination="@id/nav_register" />
+        <action
+            android:id="@+id/action_nav_login_to_accountPendingFragment"
+            app:destination="@id/accountPendingFragment" />
     </fragment>
 
     <fragment
@@ -26,9 +29,9 @@
         android:label="@string/register"
         tools:layout="@layout/register_fragment">
         <action
-            app:popUpToInclusive="true"
             android:id="@+id/action_nav_register_to_profileFragment"
-            app:destination="@id/profileFragment" />
+            app:destination="@id/profileFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -39,7 +42,8 @@
         >
         <action
             android:id="@+id/action_profileFragment_to_accountPendingFragment"
-            app:destination="@id/accountPendingFragment" />
+            app:destination="@id/accountPendingFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/accountPendingFragment"

@@ -217,7 +217,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 mBinding.spinnerSalutation.getSelectedItem().toString().trim(),
                 "",
                 mBinding.txtSchool.getText().toString(),
-                Utils.chipsSubjectToList(mBinding.chipsInput.getSelectedChipList())
+                Utils.chipsSubjectToList(mBinding.chipsInput.getSelectedChipList()),
+                false
 
         );
 

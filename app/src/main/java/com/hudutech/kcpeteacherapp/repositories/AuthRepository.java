@@ -32,7 +32,9 @@ public class AuthRepository implements LoginMethods, SignUpMethods {
     private MutableLiveData<String> successMsg = new MutableLiveData<>();
     private MutableLiveData<String> errorMsg = new MutableLiveData<>();
     private MutableLiveData<Boolean> isLoading = new MutableLiveData<>();
-    private MutableLiveData<Boolean> profileExists = new MutableLiveData<>();
+    private MutableLiveData<Boolean> hasActiveProfile = new MutableLiveData<>();
+    private MutableLiveData<Boolean> hasPendingProfile = new MutableLiveData<>();
+    private MutableLiveData<Boolean> hasNoProfile = new MutableLiveData<>();
     private MutableLiveData<FirebaseUser> mCurrentUser = new MutableLiveData<>();
 
 
@@ -128,12 +130,24 @@ public class AuthRepository implements LoginMethods, SignUpMethods {
         mRef.get().addOnSuccessListener(documentSnapshot -> {
             TeacherProfile profile = documentSnapshot.toObject(TeacherProfile.class);
             if (profile != null) {
-                profileExists.postValue(true);
+                if (profile.isApproved()) {
+                    hasActiveProfile.postValue(true);
+                    hasNoProfile.postValue(false);
+                    hasPendingProfile.postValue(false);
+                } else {
+                    hasPendingProfile.postValue(true);
+                    hasActiveProfile.postValue(false);
+                    hasNoProfile.postValue(false);
+                }
             } else {
-                profileExists.postValue(false);
+                hasNoProfile.postValue(true);
+                hasActiveProfile.postValue(false);
+                hasPendingProfile.postValue(false);
             }
         }).addOnFailureListener(e -> {
-            profileExists.postValue(false);
+            hasNoProfile.postValue(false);
+            hasActiveProfile.postValue(false);
+            hasPendingProfile.postValue(false);
         });
 
     }
@@ -240,8 +254,16 @@ public class AuthRepository implements LoginMethods, SignUpMethods {
         return isLoading;
     }
 
-    public MutableLiveData<Boolean> getProfileExists() {
-        return profileExists;
+    public MutableLiveData<Boolean> hasActiveProfile() {
+        return hasActiveProfile;
+    }
+
+    public MutableLiveData<Boolean> hasPendingProfile() {
+        return hasActiveProfile;
+    }
+
+    public MutableLiveData<Boolean> hasNoProfile() {
+        return hasNoProfile;
     }
 
     public LiveData<FirebaseUser> getCurrentUser() {

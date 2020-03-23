@@ -36,7 +36,7 @@ public class TeacherProfile {
     public TeacherProfile(){}
 
     @Ignore
-    public TeacherProfile(String userId, String firstName, String lastName, String phoneNumber, String email,  String salutation, String avatarUrl, String school, List<String> subjects) {
+    public TeacherProfile(String userId, String firstName, String lastName, String phoneNumber, String email,  String salutation, String avatarUrl, String school, List<String> subjects, boolean approved) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -47,6 +47,7 @@ public class TeacherProfile {
         this.avatarUrl = avatarUrl;
         this.school = school;
         this.subjects = subjects;
+        this.approved = approved;
     }
 
 
@@ -112,6 +113,30 @@ public class TeacherProfile {
 
     public void setSubjects(List<String> subjects) {
         this.subjects = subjects;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public boolean isApproved() {
+        return approved;
+    }
+
+    public void setApproved(boolean approved) {
+        this.approved = approved;
     }
 }
 
