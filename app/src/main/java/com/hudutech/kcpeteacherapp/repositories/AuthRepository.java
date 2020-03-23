@@ -1,6 +1,7 @@
 package com.hudutech.kcpeteacherapp.repositories;
 
 import android.app.Application;
+import android.os.Bundle;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -11,15 +12,18 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.hudutech.kcpeteacherapp.interfaces.LoginMethods;
+import com.hudutech.kcpeteacherapp.interfaces.SignUpMethods;
 import com.hudutech.kcpeteacherapp.models.TeacherProfile;
 
 import java.util.Objects;
 
-public class AuthRepository {
+public class AuthRepository implements LoginMethods, SignUpMethods {
     private static AuthRepository instance;
     private Application mApplication;
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -118,7 +122,7 @@ public class AuthRepository {
     }
 
 
-    public void checkProfile(){
+    private void checkProfile() {
 
         DocumentReference mRef = firestore.collection("profiles").document(Objects.requireNonNull(mAuth.getCurrentUser()).getUid());
         mRef.get().addOnSuccessListener(documentSnapshot -> {
@@ -134,6 +138,47 @@ public class AuthRepository {
 
     }
 
+
+    @Override
+    public void signUpWithEmailPassword(String email, String password) {
+        isLoading.postValue(true);
+        successMsg.postValue("");
+        errorMsg.postValue("");
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        //pass the account instance here
+                        isLoading.postValue(false);
+                        successMsg.postValue("Account created successfully.");
+                        mCurrentUser.postValue(mAuth.getCurrentUser());
+
+
+                    } else {
+                        String error;
+                        if (task.getException() instanceof FirebaseAuthUserCollisionException) {
+                            error = "Account With this email already exists. Login Instead";
+                        } else {
+                            error = "Unable to Authenticate. please try again later";
+                        }
+
+                        isLoading.postValue(false);
+                        errorMsg.postValue(error);
+
+                    }
+
+
+                });
+    }
+
+    @Override
+    public void signUpWithFacebook(AccessToken accessToken) {
+
+    }
+
+    @Override
+    public void signUpWithGoogle(GoogleSignInAccount account) {
+
+    }
 
     public MutableLiveData<String> getSuccessMsg() {
         return successMsg;
