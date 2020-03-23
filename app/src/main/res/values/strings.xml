@@ -21,7 +21,7 @@
 
     <string name="google" translatable="false">Google</string>
     <string name="facebook" translatable="false">Facebook</string>
-    <string name="terms_and_conditions" translatable="false"><![CDATA[By Signing in to this app you agree to the <a href=\'https://www.google.com\'>KlickIt Apps Terms of Service</a> and <a href=\'#\'>Privacy Policy.</a>]]></string>
+    <string name="terms_and_conditions" translatable="false"><![CDATA[By Signing in to this app you agree to the <a href=\'https://klickitapp.co.ke/privacy-policy/\'>KlickIt Apps Terms of Service</a> and <a href=\'https://klickitapp.co.ke/privacy-policy/\'>Privacy Policy.</a>]]></string>
     <string name="confirm_password" translatable="false">Confirm Password</string>
     <string name="register_with">Register with</string>
 

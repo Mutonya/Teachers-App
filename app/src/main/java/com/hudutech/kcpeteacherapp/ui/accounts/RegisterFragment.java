@@ -16,6 +16,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -84,12 +85,15 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
         mBinding.btnFacebook.setOnClickListener(this);
         mBinding.btnGoogle.setOnClickListener(this);
 
+       // mBinding.tvTerms.setMovementMethod(LinkMovementMethod.getInstance());
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             mBinding.tvTerms.setText(HtmlCompat.fromHtml(getString(R.string.terms_and_conditions), HtmlCompat.FROM_HTML_MODE_COMPACT));
         } else {
             mBinding.tvTerms.setText(HtmlCompat.fromHtml(getString(R.string.terms_and_conditions), HtmlCompat.FROM_HTML_MODE_COMPACT));
         }
+        mBinding.tvTerms.setMovementMethod(LinkMovementMethod.getInstance());
+        mBinding.tvTerms.setClickable(true);
     }
 
     @Override

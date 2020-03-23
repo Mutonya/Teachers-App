@@ -4,6 +4,8 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.method.LinkMovementMethod;
+import android.text.method.MovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -61,12 +63,15 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.login_fragment, container, false);
+       // mBinding.tvLoginTerms.setMovementMethod(LinkMovementMethod.getInstance());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             mBinding.setTerms(HtmlCompat.fromHtml(getString(R.string.terms_and_conditions), HtmlCompat.FROM_HTML_MODE_COMPACT));
         } else {
             mBinding.setTerms(HtmlCompat.fromHtml(getString(R.string.terms_and_conditions), HtmlCompat.FROM_HTML_MODE_COMPACT));
         }
 
+        mBinding.tvLoginTerms.setMovementMethod(LinkMovementMethod.getInstance());
+        mBinding.tvLoginTerms.setClickable(true);
 
         return mBinding.getRoot();
 
@@ -121,7 +126,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
             }
         });
 
-        mViewModel.getSuccessMsg().observe(getViewLifecycleOwner(), s->{
+        mViewModel.getSuccessMsg().observe(getViewLifecycleOwner(), s -> {
             if (!s.isEmpty()) {
                 displaySuccessMessage(requireContext(), s);
             }
