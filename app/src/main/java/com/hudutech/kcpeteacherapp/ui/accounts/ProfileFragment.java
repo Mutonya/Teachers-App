@@ -22,6 +22,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -57,6 +58,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private ProgressDialog mProgress;
 
     private Uri selectedPhotoUri;
+    private String gender;
 
     public static ProfileFragment newInstance() {
         return new ProfileFragment();
@@ -78,6 +80,16 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         mBinding.chipsInput.setFilterableList(getSkillsList());
         mBinding.imgUserProfile.setOnClickListener(this);
         mBinding.btnContinue.setOnClickListener(this);
+
+        mBinding.genderRadioGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            if (checkedId == R.id.radio_male) {
+                gender = mBinding.radioMale.getText().toString();
+            }
+
+            if (checkedId == R.id.radio_female) {
+                gender = mBinding.radioFemale.getText().toString();
+            }
+        });
     }
 
     @Override
@@ -229,9 +241,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             mBinding.txtEmail.setError("Required");
         }
 
-        if (!isEmailValid(mBinding.txtFirstname.getText().toString())) {
+        if (!isEmailValid(mBinding.txtEmail.getText().toString())) {
             isValid = false;
-            mBinding.txtFirstname.setError("Enter valid email");
+            mBinding.txtEmail.setError("Enter valid email");
         }
 
         if (TextUtils.isEmpty(mBinding.txtPhoneNumber.getText().toString())) {
@@ -246,8 +258,14 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
         if (mBinding.spinnerSalutation.getSelectedItemPosition() == 0) {
             isValid = false;
-            displaySuccessMessage(requireContext(), "Select appropriate salutation");
+            displayErrorMessage(requireContext(), "Select appropriate salutation");
         }
+
+        if (gender.isEmpty()) {
+            isValid = false;
+            displayErrorMessage(requireContext(), "Select gender");
+        }
+
 
         return isValid;
     }
