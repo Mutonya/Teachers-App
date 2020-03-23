@@ -40,4 +40,8 @@ public class ProfileViewModel extends AndroidViewModel {
     public LiveData<Boolean> getIsLoading() {
         return isLoading;
     }
+
+    public void resetValues() {
+        repository.resetValues();
+    }
 }

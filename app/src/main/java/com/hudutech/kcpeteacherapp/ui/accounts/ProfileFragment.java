@@ -100,8 +100,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         mViewModel.getSuccessMsg().observe(getViewLifecycleOwner(), s -> {
             if (!s.isEmpty()) {
                 displaySuccessMessage(requireContext(), s);
+                mViewModel.resetValues();
                 navController.navigate(R.id.action_profileFragment_to_accountPendingFragment);
-
             }
         });
 

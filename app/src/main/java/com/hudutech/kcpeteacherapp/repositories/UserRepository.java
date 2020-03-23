@@ -94,4 +94,10 @@ public class UserRepository {
     public MutableLiveData<Boolean> getIsLoading() {
         return isLoading;
     }
+
+    public void resetValues() {
+        errorMsg.postValue("");
+        successMsg.postValue("");
+        isLoading.postValue(false);
+    }
 }
