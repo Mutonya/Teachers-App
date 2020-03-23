@@ -19,6 +19,10 @@ public class TeacherProfile {
     private String lastName;
     @ColumnInfo(name = "display_name")
     private String displayName;
+    @ColumnInfo(name = "email")
+    private String email;
+    @ColumnInfo(name = "phone_number")
+    private String phoneNumber;
     @ColumnInfo(name = "salutation")
     private String salutation;
     @ColumnInfo(name = "avatarUrl")
@@ -26,14 +30,18 @@ public class TeacherProfile {
     @ColumnInfo(name = "school")
     private String school;
     private List<String> subjects;
+    @ColumnInfo(name = "approved")
+    private boolean approved;
 
     public TeacherProfile(){}
 
     @Ignore
-    public TeacherProfile(String userId, String firstName, String lastName, String displayName, String salutation, String avatarUrl, String school, List<String> subjects) {
+    public TeacherProfile(String userId, String firstName, String lastName, String phoneNumber, String email,  String salutation, String avatarUrl, String school, List<String> subjects) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
         this.displayName = String.format("%s %s", salutation, lastName);
         this.salutation = salutation;
         this.avatarUrl = avatarUrl;

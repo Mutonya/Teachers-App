@@ -21,14 +21,22 @@
         android:id="@+id/nav_register"
         android:name="com.hudutech.kcpeteacherapp.ui.accounts.RegisterFragment"
         android:label="@string/register"
-        tools:layout="@layout/register_fragment"/>
+        tools:layout="@layout/register_fragment">
+        <action
+            android:id="@+id/action_nav_register_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.hudutech.kcpeteacherapp.ui.accounts.ProfileFragment"
         android:label="profile_fragment"
         tools:layout="@layout/profile_fragment"
 
-        />
+        >
+        <action
+            android:id="@+id/action_profileFragment_to_accountPendingFragment"
+            app:destination="@id/accountPendingFragment" />
+    </fragment>
     <fragment
         android:id="@+id/accountPendingFragment"
         android:name="com.hudutech.kcpeteacherapp.ui.accounts.AccountPendingFragment"
