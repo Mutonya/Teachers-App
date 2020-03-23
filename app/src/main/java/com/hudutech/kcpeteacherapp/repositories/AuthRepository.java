@@ -172,7 +172,31 @@ public class AuthRepository implements LoginMethods, SignUpMethods {
 
     @Override
     public void signUpWithFacebook(AccessToken accessToken) {
+        isLoading.postValue(true);
+        successMsg.postValue("");
+        errorMsg.postValue("");
+        AuthCredential credential = FacebookAuthProvider.getCredential(accessToken.getToken());
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        isLoading.postValue(false);
+                        successMsg.postValue("Authentication Successful");
+                        mCurrentUser.postValue(mAuth.getCurrentUser());
 
+                    } else {
+                        isLoading.postValue(false);
+
+                        String message = "Authentication Failed.";
+                        if (task.getException() instanceof FirebaseAuthUserCollisionException) {
+                            message = "Account already exists please login in instead.";
+                        }
+
+                        errorMsg.postValue(message);
+
+                    }
+
+
+                });
     }
 
     @Override
