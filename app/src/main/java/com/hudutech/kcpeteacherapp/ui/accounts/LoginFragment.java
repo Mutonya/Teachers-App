@@ -32,6 +32,7 @@ import com.google.android.gms.tasks.Task;
 import com.hudutech.kcpeteacherapp.MainActivity;
 import com.hudutech.kcpeteacherapp.R;
 import com.hudutech.kcpeteacherapp.databinding.LoginFragmentBinding;
+import com.hudutech.kcpeteacherapp.interfaces.LoginMethods;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -98,8 +99,10 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
             if (!s.isEmpty()) {
                 mViewModel.getHasProfile().observe(getViewLifecycleOwner(), aBoolean -> {
                     if (aBoolean) {
+                        mViewModel.resetValues();
                         startActivity(new Intent(requireActivity(), MainActivity.class));
                         requireActivity().finish();
+
                     } else {
                         navController.navigate(R.id.action_nav_login_to_profileFragment);
                     }
