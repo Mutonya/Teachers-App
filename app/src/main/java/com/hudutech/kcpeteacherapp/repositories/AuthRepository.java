@@ -214,7 +214,6 @@ public class AuthRepository implements LoginMethods, SignUpMethods {
 
                     } else {
                         isLoading.postValue(false);
-
                         String message = "Authentication Failed.";
                         if (task.getException() instanceof FirebaseAuthUserCollisionException) {
                             message = "Account already exists please login in instead.";
