@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.text.method.MovementMethod;
 import android.util.Log;
@@ -31,6 +32,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.hudutech.kcpeteacherapp.MainActivity;
 import com.hudutech.kcpeteacherapp.R;
 import com.hudutech.kcpeteacherapp.databinding.LoginFragmentBinding;
@@ -43,6 +45,7 @@ import static com.hudutech.kcpeteacherapp.utils.Utils.displayErrorMessage;
 import static com.hudutech.kcpeteacherapp.utils.Utils.displayInfoMessage;
 import static com.hudutech.kcpeteacherapp.utils.Utils.displaySuccessMessage;
 import static com.hudutech.kcpeteacherapp.utils.Utils.isConnected;
+import static com.hudutech.kcpeteacherapp.utils.Utils.isEmailValid;
 
 public class LoginFragment extends Fragment implements View.OnClickListener {
     private static final String TAG = "LoginFragment";
@@ -211,8 +214,16 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
 
         if (id == R.id.btn_login) {
-            //some code here
-            mViewModel.loginWithEmailPassword(mBinding.txtEmail.getText().toString(), mBinding.txtPassword.getText().toString());
+            if (isConnected(requireContext())) {
+                if (validateInput()) {
+                    mViewModel.loginWithEmailPassword(mBinding.txtEmail.getText().toString(), mBinding.txtPassword.getText().toString());
+                } else {
+                    Snackbar.make(v, "Fix errors above to continue", Snackbar.LENGTH_LONG).show();
+                }
+            } else {
+                displayInfoMessage(getContext(), "No internet Connection");
+
+            }
         } else if (id == R.id.btn_facebook) {
             if (isConnected(requireContext())) {
                 loginManager.logInWithReadPermissions(requireActivity(), Arrays.asList("public_profile"));
@@ -240,6 +251,26 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         mProgress.setMessage(message);
         mProgress.setCanceledOnTouchOutside(false);
         mProgress.show();
+    }
+
+    private boolean validateInput() {
+        boolean isValid = true;
+        if(TextUtils.isEmpty(mBinding.txtEmail.getText().toString().trim())) {
+            isValid = false;
+            mBinding.txtEmail.setError("Email Required");
+        }
+
+        if (!isEmailValid(mBinding.txtEmail.getText().toString().trim())) {
+            isValid = false;
+            mBinding.txtEmail.setError("Invalid email");
+        }
+
+        if(TextUtils.isEmpty(mBinding.txtPassword.getText().toString())) {
+            isValid = false;
+            mBinding.txtPassword.setError("Password Required");
+        }
+
+        return isValid;
     }
 
 }
