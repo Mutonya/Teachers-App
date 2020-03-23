@@ -185,6 +185,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         startActivityForResult(Intent.createChooser(intent, "Select A Photo"), OPEN_IMAGE);
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+
+    }
 
     @RequiresApi(api = M)
     @Override

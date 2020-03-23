@@ -2,6 +2,7 @@ package com.hudutech.kcpeteacherapp.repositories;
 
 import android.app.Application;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -24,6 +25,7 @@ import com.hudutech.kcpeteacherapp.models.TeacherProfile;
 import java.util.Objects;
 
 public class AuthRepository implements LoginMethods, SignUpMethods {
+    private static final String TAG = "AuthRepository";
     private static AuthRepository instance;
     private Application mApplication;
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -32,9 +34,7 @@ public class AuthRepository implements LoginMethods, SignUpMethods {
     private MutableLiveData<String> successMsg = new MutableLiveData<>();
     private MutableLiveData<String> errorMsg = new MutableLiveData<>();
     private MutableLiveData<Boolean> isLoading = new MutableLiveData<>();
-    private MutableLiveData<Boolean> hasActiveProfile = new MutableLiveData<>();
-    private MutableLiveData<Boolean> hasPendingProfile = new MutableLiveData<>();
-    private MutableLiveData<Boolean> hasNoProfile = new MutableLiveData<>();
+
     private MutableLiveData<FirebaseUser> mCurrentUser = new MutableLiveData<>();
 
 
@@ -56,7 +56,6 @@ public class AuthRepository implements LoginMethods, SignUpMethods {
                 .addOnCompleteListener(task -> {
 
                     if (task.isSuccessful()) {
-                        checkProfile();
                         isLoading.postValue(false);
                         successMsg.postValue("Login Successful.");
                         mCurrentUser.postValue(mAuth.getCurrentUser());
@@ -82,7 +81,7 @@ public class AuthRepository implements LoginMethods, SignUpMethods {
                 .addOnCompleteListener(task -> {
 
                     if (task.isSuccessful()) {
-                        checkProfile();
+
                         isLoading.postValue(false);
                         successMsg.postValue("Login Successful");
                         mCurrentUser.postValue(mAuth.getCurrentUser());
@@ -110,7 +109,7 @@ public class AuthRepository implements LoginMethods, SignUpMethods {
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        checkProfile();
+
                         isLoading.postValue(false);
                         successMsg.postValue("Login Successful");
                         mCurrentUser.postValue(mAuth.getCurrentUser());
@@ -124,31 +123,17 @@ public class AuthRepository implements LoginMethods, SignUpMethods {
     }
 
 
-    private void checkProfile() {
+    public MutableLiveData<TeacherProfile> getProfile(String userId) {
+        MutableLiveData<TeacherProfile> profileLiveData = new MutableLiveData<>();
 
-        DocumentReference mRef = firestore.collection("profiles").document(Objects.requireNonNull(mAuth.getCurrentUser()).getUid());
+        DocumentReference mRef = firestore.collection("profiles").document(userId);
         mRef.get().addOnSuccessListener(documentSnapshot -> {
             TeacherProfile profile = documentSnapshot.toObject(TeacherProfile.class);
-            if (profile != null) {
-                if (profile.isApproved()) {
-                    hasActiveProfile.postValue(true);
-                    hasNoProfile.postValue(false);
-                    hasPendingProfile.postValue(false);
-                } else {
-                    hasPendingProfile.postValue(true);
-                    hasActiveProfile.postValue(false);
-                    hasNoProfile.postValue(false);
-                }
-            } else {
-                hasNoProfile.postValue(true);
-                hasActiveProfile.postValue(false);
-                hasPendingProfile.postValue(false);
-            }
+            profileLiveData.postValue(profile);
         }).addOnFailureListener(e -> {
-            hasNoProfile.postValue(false);
-            hasActiveProfile.postValue(false);
-            hasPendingProfile.postValue(false);
+            Log.e(TAG, "checkProfile: ", e);
         });
+        return profileLiveData;
 
     }
 
@@ -254,17 +239,7 @@ public class AuthRepository implements LoginMethods, SignUpMethods {
         return isLoading;
     }
 
-    public MutableLiveData<Boolean> hasActiveProfile() {
-        return hasActiveProfile;
-    }
 
-    public MutableLiveData<Boolean> hasPendingProfile() {
-        return hasActiveProfile;
-    }
-
-    public MutableLiveData<Boolean> hasNoProfile() {
-        return hasNoProfile;
-    }
 
     public LiveData<FirebaseUser> getCurrentUser() {
         return mCurrentUser;

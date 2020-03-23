@@ -6,7 +6,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
-import android.text.method.MovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,13 +32,12 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
 import com.hudutech.kcpeteacherapp.MainActivity;
 import com.hudutech.kcpeteacherapp.R;
 import com.hudutech.kcpeteacherapp.databinding.LoginFragmentBinding;
-import com.hudutech.kcpeteacherapp.interfaces.LoginMethods;
 
 import java.util.Arrays;
-import java.util.Objects;
 
 import static com.hudutech.kcpeteacherapp.utils.Utils.displayErrorMessage;
 import static com.hudutech.kcpeteacherapp.utils.Utils.displayInfoMessage;
@@ -104,30 +102,29 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
-        mViewModel.getCurrentUser().observe(getViewLifecycleOwner(), mCurrentUser -> {
-            if (mCurrentUser != null) {
-                mViewModel.getHasActiveProfile().observe(getViewLifecycleOwner(), aBoolean -> {
-                    if (aBoolean) {
-                        mViewModel.resetValues();
-                        startActivity(new Intent(requireActivity(), MainActivity.class));
-                        requireActivity().finish();
+        mViewModel.getSuccessMsg().observe(getViewLifecycleOwner(), s -> {
+            if (!s.isEmpty()) {
+                displaySuccessMessage(requireContext(), s);
+                showProgress("Checking profile");
+                mViewModel.getProfile(FirebaseAuth.getInstance().getCurrentUser().getUid()).observe(getViewLifecycleOwner(), profile -> {
+                    if (profile !=null) {
+                        if (profile.isApproved()) {
+                            mViewModel.resetValues();
+                            hideProgress();
+                            startActivity(new Intent(requireActivity(), MainActivity.class));
+                            requireActivity().finish();
 
+                        } else {
+                            hideProgress();
+                            mViewModel.resetValues();
+                            navController.navigate(R.id.action_nav_login_to_accountPendingFragment);
+
+                        }
                     } else {
+                        mViewModel.resetValues();
+                        hideProgress();
                         navController.navigate(R.id.action_nav_login_to_profileFragment);
-                    }
-                });
 
-
-                mViewModel.getHasPendingProfile().observe(getViewLifecycleOwner(), aBoolean -> {
-                    if (aBoolean) {
-                       navController.navigate(R.id.action_nav_login_to_accountPendingFragment);
-
-                    }
-                });
-
-                mViewModel.getHasNoProfile().observe(getViewLifecycleOwner(), aBoolean -> {
-                    if (aBoolean) {
-                        navController.navigate(R.id.action_nav_login_to_profileFragment);
                     }
                 });
 
@@ -142,11 +139,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
             }
         });
 
-        mViewModel.getSuccessMsg().observe(getViewLifecycleOwner(), s -> {
-            if (!s.isEmpty()) {
-                displaySuccessMessage(requireContext(), s);
-            }
-        });
 
         mViewModel.getErrorMsg().observe(getViewLifecycleOwner(), s -> {
             if (!s.isEmpty()) {
@@ -207,6 +199,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         });
 
     }
+
+
 
     @Override
     public void onClick(View v) {

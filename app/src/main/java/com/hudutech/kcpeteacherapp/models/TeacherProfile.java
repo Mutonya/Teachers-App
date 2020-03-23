@@ -1,15 +1,21 @@
 package com.hudutech.kcpeteacherapp.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
+import com.google.android.material.button.MaterialButton;
+
 import java.util.List;
+
 @Entity
 @TypeConverters({SubjectTypeConverter.class})
-public class TeacherProfile {
+public class TeacherProfile implements Parcelable {
     @PrimaryKey
     @ColumnInfo(name = "user_id")
     private String userId;
@@ -33,10 +39,11 @@ public class TeacherProfile {
     @ColumnInfo(name = "approved")
     private boolean approved;
 
-    public TeacherProfile(){}
+    public TeacherProfile() {
+    }
 
     @Ignore
-    public TeacherProfile(String userId, String firstName, String lastName, String phoneNumber, String email,  String salutation, String avatarUrl, String school, List<String> subjects, boolean approved) {
+    public TeacherProfile(String userId, String firstName, String lastName, String phoneNumber, String email, String salutation, String avatarUrl, String school, List<String> subjects, boolean approved) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -50,6 +57,32 @@ public class TeacherProfile {
         this.approved = approved;
     }
 
+    @Ignore
+    protected TeacherProfile(Parcel in) {
+        userId = in.readString();
+        firstName = in.readString();
+        lastName = in.readString();
+        displayName = in.readString();
+        email = in.readString();
+        phoneNumber = in.readString();
+        salutation = in.readString();
+        avatarUrl = in.readString();
+        school = in.readString();
+        subjects = in.createStringArrayList();
+        approved = in.readByte() != 0;
+    }
+
+    public static final Creator<TeacherProfile> CREATOR = new Creator<TeacherProfile>() {
+        @Override
+        public TeacherProfile createFromParcel(Parcel in) {
+            return new TeacherProfile(in);
+        }
+
+        @Override
+        public TeacherProfile[] newArray(int size) {
+            return new TeacherProfile[size];
+        }
+    };
 
     public String getUserId() {
         return userId;
@@ -137,6 +170,26 @@ public class TeacherProfile {
 
     public void setApproved(boolean approved) {
         this.approved = approved;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(userId);
+        dest.writeString(firstName);
+        dest.writeString(lastName);
+        dest.writeString(displayName);
+        dest.writeString(email);
+        dest.writeString(phoneNumber);
+        dest.writeString(salutation);
+        dest.writeString(avatarUrl);
+        dest.writeString(school);
+        dest.writeStringList(subjects);
+        dest.writeByte((byte) (approved ? 1 : 0));
     }
 }
 
