@@ -3,6 +3,7 @@ package com.hudutech.kcpeteacherapp.repositories;
 import android.app.Application;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
@@ -24,6 +25,7 @@ import static com.hudutech.kcpeteacherapp.utils.Utils.getBitmapFromUri;
 import static com.hudutech.kcpeteacherapp.utils.Utils.getFileNameFromUri;
 
 public class UserRepository {
+    private static final String TAG = "UserRepository";
     private static UserRepository instance;
     private Application mApplication;
     private FirebaseFirestore firestore = FirebaseFirestore.getInstance();
@@ -82,6 +84,23 @@ public class UserRepository {
        });
 
     }
+
+    public MutableLiveData<TeacherProfile> getProfile(String userId) {
+        isLoading.postValue(true);
+        MutableLiveData<TeacherProfile> profileLiveData = new MutableLiveData<>();
+        DocumentReference mRef = firestore.collection("profiles").document(userId);
+        mRef.get().addOnSuccessListener(documentSnapshot -> {
+            isLoading.postValue(false);
+            TeacherProfile profile = documentSnapshot.toObject(TeacherProfile.class);
+            profileLiveData.postValue(profile);
+        }).addOnFailureListener(e -> {
+            isLoading.postValue(false);
+            Log.e(TAG, "getProfile: ", e);
+        });
+        return profileLiveData;
+
+    }
+
 
     public MutableLiveData<String> getSuccessMsg() {
         return successMsg;

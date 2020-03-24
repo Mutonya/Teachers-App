@@ -1,5 +1,6 @@
 package com.hudutech.kcpeteacherapp.ui.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.hudutech.kcpeteacherapp.R;
+import com.hudutech.kcpeteacherapp.ui.about.AboutActivity;
 
 public class HomeFragment extends Fragment {
 
@@ -23,13 +25,11 @@ public class HomeFragment extends Fragment {
         homeViewModel =
                 ViewModelProviders.of(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
-        final TextView textView = root.findViewById(R.id.text_home);
-        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
+        final TextView btnProfile = root.findViewById(R.id.btn_profile);
+        btnProfile.setOnClickListener(v -> {
+            startActivity(new Intent(requireContext(), AboutActivity.class));
         });
+
         return root;
     }
 }

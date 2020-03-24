@@ -12,10 +12,11 @@ import com.hudutech.kcpeteacherapp.ui.about.ReviewsFragment;
 
 public class AboutSectionAdapter extends FragmentPagerAdapter {
 
-
-
-    public AboutSectionAdapter(FragmentManager fm) {
+    private Bundle args;
+    public AboutSectionAdapter(FragmentManager fm, TeacherProfile profile) {
         super(fm);
+        args = new Bundle();
+        args.putParcelable("profile", profile);
 
     }
 
@@ -23,10 +24,10 @@ public class AboutSectionAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return AboutFragment.newInstance();
+                return AboutFragment.newInstance(args);
             case 1:
 
-                return ReviewsFragment.newInstance();
+                return ReviewsFragment.newInstance(args);
 
             default:
                 return null;

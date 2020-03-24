@@ -1,7 +1,34 @@
 package com.hudutech.kcpeteacherapp.ui.about;
 
-import androidx.lifecycle.ViewModel;
+import android.app.Application;
 
-public class AboutViewModel extends ViewModel {
-    // TODO: Implement the ViewModel
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+
+import com.hudutech.kcpeteacherapp.models.TeacherProfile;
+import com.hudutech.kcpeteacherapp.repositories.UserRepository;
+
+public class AboutViewModel extends AndroidViewModel {
+    private UserRepository repository;
+    private MutableLiveData<TeacherProfile> profile;
+    private MutableLiveData<Boolean> isLoading;
+
+    public AboutViewModel(@NonNull Application application) {
+        super(application);
+        repository = UserRepository.getInstance(application);
+        isLoading = repository.getIsLoading();
+    }
+
+    public LiveData<TeacherProfile> getProfile(String userId) {
+        return repository.getProfile(userId);
+    }
+
+    public LiveData<Boolean> getIsLoading() {
+        return isLoading;
+    }
+    public void resetValues() {
+        repository.resetValues();
+    }
 }

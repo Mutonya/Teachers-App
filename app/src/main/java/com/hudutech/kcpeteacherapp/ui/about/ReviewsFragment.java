@@ -18,8 +18,11 @@ public class ReviewsFragment extends Fragment {
 
     private ReviewsViewModel mViewModel;
 
-    public static ReviewsFragment newInstance() {
-        return new ReviewsFragment();
+
+    public static ReviewsFragment newInstance(Bundle args) {
+        ReviewsFragment fragment = new ReviewsFragment();
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
