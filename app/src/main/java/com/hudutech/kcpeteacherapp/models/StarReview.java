@@ -61,6 +61,55 @@ public class StarReview implements Parcelable {
         dest.writeLong(timestamp);
     }
 
+    public String getDocKey() {
+        return docKey;
+    }
+
+    public void setDocKey(String docKey) {
+        this.docKey = docKey;
+    }
+
+    public String getReviewedUserId() {
+        return reviewedUserId;
+    }
+
+    public void setReviewedUserId(String reviewedUserId) {
+        this.reviewedUserId = reviewedUserId;
+    }
+
+    public String getReviewByUid() {
+        return reviewByUid;
+    }
+
+    public void setReviewByUid(String reviewByUid) {
+        this.reviewByUid = reviewByUid;
+    }
+
+    @Nullable
+    public String getReview() {
+        return review;
+    }
+
+    public void setReview(@Nullable String review) {
+        this.review = review;
+    }
+
+    public float getStars() {
+        return stars;
+    }
+
+    public void setStars(float stars) {
+        this.stars = stars;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
+    }
+
     @Override
     public String toString() {
         return "StarReview{" +
