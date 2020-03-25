@@ -14,6 +14,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.hudutech.kcpeteacherapp.models.ChatMessage;
 import com.mkungusi.kcperevision.Interfaces.RecyclerItemClickListener;
 import com.mkungusi.kcperevision.R;
 import com.mkungusi.kcperevision.databinding.ItemMessageReceivedBinding;
