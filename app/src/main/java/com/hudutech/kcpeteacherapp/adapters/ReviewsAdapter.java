@@ -16,13 +16,14 @@ import com.hudutech.kcpeteacherapp.models.StarReview;
 import com.hudutech.kcpeteacherapp.models.User;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHolder> {
 
     private Context mContext;
-    private List<StarReview> reviews;
+    private List<StarReview> reviews = new ArrayList<>();
     private CollectionReference mUsersRef;
 
 

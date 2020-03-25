@@ -58,5 +58,7 @@ public class ReviewsRepository {
         return reviewsLiveData;
     }
 
-
+    public MutableLiveData<Boolean> getIsLoading() {
+        return isLoading;
+    }
 }

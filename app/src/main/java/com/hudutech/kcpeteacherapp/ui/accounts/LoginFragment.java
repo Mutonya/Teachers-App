@@ -33,6 +33,8 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthActionCodeException;
+import com.google.firebase.auth.FirebaseUser;
 import com.hudutech.kcpeteacherapp.MainActivity;
 import com.hudutech.kcpeteacherapp.R;
 import com.hudutech.kcpeteacherapp.databinding.LoginFragmentBinding;
@@ -105,28 +107,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         mViewModel.getSuccessMsg().observe(getViewLifecycleOwner(), s -> {
             if (!s.isEmpty()) {
                 displaySuccessMessage(requireContext(), s);
-                showProgress("Checking profile");
-                mViewModel.getProfile(FirebaseAuth.getInstance().getCurrentUser().getUid()).observe(getViewLifecycleOwner(), profile -> {
-                    if (profile !=null) {
-                        if (profile.isApproved()) {
-                            mViewModel.resetValues();
-                            hideProgress();
-                            startActivity(new Intent(requireActivity(), MainActivity.class));
-                            requireActivity().finish();
-
-                        } else {
-                            hideProgress();
-                            mViewModel.resetValues();
-                            navController.navigate(R.id.action_nav_login_to_accountPendingFragment);
-
-                        }
-                    } else {
-                        mViewModel.resetValues();
-                        hideProgress();
-                        navController.navigate(R.id.action_nav_login_to_profileFragment);
-
-                    }
-                });
+               FirebaseUser mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
+               onAuthSuccess(mCurrentUser);
 
             }
         });
@@ -145,6 +127,12 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 displayErrorMessage(requireContext(), s);
             }
         });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        checkIfUserAlreadyLoggedIn();
     }
 
     @Override
@@ -245,6 +233,40 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         mProgress.setMessage(message);
         mProgress.setCanceledOnTouchOutside(false);
         mProgress.show();
+    }
+
+
+
+    private void checkIfUserAlreadyLoggedIn() {
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        if (mAuth.getCurrentUser() !=null) {
+            onAuthSuccess(mAuth.getCurrentUser());
+        }
+    }
+
+    private void onAuthSuccess(FirebaseUser mCurrentUser) {
+        showProgress("Checking profile");
+        mViewModel.getProfile(mCurrentUser.getUid()).observe(getViewLifecycleOwner(), profile -> {
+            if (profile !=null) {
+                if (profile.isApproved()) {
+                    mViewModel.resetValues();
+                    hideProgress();
+                    startActivity(new Intent(requireActivity(), MainActivity.class));
+                    requireActivity().finish();
+
+                } else {
+                    hideProgress();
+                    mViewModel.resetValues();
+                    navController.navigate(R.id.action_nav_login_to_accountPendingFragment);
+
+                }
+            } else {
+                mViewModel.resetValues();
+                hideProgress();
+                navController.navigate(R.id.action_nav_login_to_profileFragment);
+
+            }
+        });
     }
 
     private boolean validateInput() {

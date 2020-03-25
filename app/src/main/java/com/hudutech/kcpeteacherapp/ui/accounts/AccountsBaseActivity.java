@@ -15,4 +15,10 @@ public class AccountsBaseActivity extends AppCompatActivity {
         setContentView(R.layout.activity_accounts_base);
 
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        //check if user already logged in and redirect the user automatically
+    }
 }
