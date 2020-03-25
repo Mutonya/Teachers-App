@@ -48,9 +48,13 @@ public class ImageBindingAdapter {
 
     @BindingAdapter("circularImageUrl")
     public static void setCircularImageUrl(ImageView view, String url){
+        RequestOptions requestOptions = new RequestOptions()
+                .placeholder(R.drawable.logo)
+                .error(R.drawable.logo);
         Context context = view.getContext();
         Glide.with(context)
                 .load(url)
+                .apply(requestOptions)
                 .apply(RequestOptions.circleCropTransform())
                 .into(view);
     }
