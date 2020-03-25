@@ -17,6 +17,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.hudutech.kcpeteacherapp.R;
 import com.hudutech.kcpeteacherapp.databinding.ItemMessageReceivedBinding;
 import com.hudutech.kcpeteacherapp.databinding.ItemMessageSentBinding;
+import com.hudutech.kcpeteacherapp.interfaces.RecyclerItemClickListener;
 import com.hudutech.kcpeteacherapp.models.ChatMessage;
 import com.hudutech.kcpeteacherapp.models.User;
 

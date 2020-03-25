@@ -20,16 +20,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.hudutech.kcpeteacherapp.R;
+import com.hudutech.kcpeteacherapp.databinding.ChatItemLayoutBinding;
+import com.hudutech.kcpeteacherapp.interfaces.RecyclerItemClickListener;
 import com.hudutech.kcpeteacherapp.models.ChatMessage;
 import com.hudutech.kcpeteacherapp.models.Conversation;
 import com.hudutech.kcpeteacherapp.models.User;
-import com.mkungusi.kcperevision.Interfaces.RecyclerItemClickListener;
-import com.mkungusi.kcperevision.R;
-import com.mkungusi.kcperevision.databinding.ChatItemLayoutBinding;
-import com.mkungusi.kcperevision.models.ChatMessage;
-import com.mkungusi.kcperevision.models.Conversation;
-import com.mkungusi.kcperevision.models.User;
-import com.mkungusi.kcperevision.ui.ChatActivity;
+
 
 import java.util.List;
 
