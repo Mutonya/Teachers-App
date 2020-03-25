@@ -13,7 +13,12 @@ import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.hudutech.kcpeteacherapp.R;
@@ -39,9 +44,22 @@ public class CustomFirebaseMessagingService extends FirebaseMessagingService {
 
 
         }
-
     }
 
+    @Override
+    public void onNewToken(String token) {
+        super.onNewToken(token);
+        FirebaseUser mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (mCurrentUser != null) {
+            setDeviceToken(mCurrentUser, token);
+        }
+    }
+
+    private void setDeviceToken(FirebaseUser mCurrentUser, String token) {
+        DatabaseReference mRef = FirebaseDatabase.getInstance().getReference("device_tokens");
+        mRef.child(mCurrentUser.getUid()).child("deviceToken").setValue(token);
+
+    }
 
     private void sendNewMsgNotification(RemoteMessage remoteMessage) {
         Map<String, String> data = remoteMessage.getData();
