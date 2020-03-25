@@ -24,6 +24,7 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.hudutech.kcpeteacherapp.interfaces.LoginMethods;
 import com.hudutech.kcpeteacherapp.interfaces.SignUpMethods;
 import com.hudutech.kcpeteacherapp.models.TeacherProfile;
+import com.hudutech.kcpeteacherapp.models.User;
 
 import java.util.Objects;
 
@@ -276,4 +277,6 @@ public class AuthRepository implements LoginMethods, SignUpMethods {
 
         });
     }
+
+
 }

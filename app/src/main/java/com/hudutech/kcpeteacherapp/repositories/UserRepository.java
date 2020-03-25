@@ -18,6 +18,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.hudutech.kcpeteacherapp.models.TeacherProfile;
+import com.hudutech.kcpeteacherapp.models.User;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.io.ByteArrayOutputStream;
 
@@ -68,6 +71,19 @@ public class UserRepository {
                profile.setAvatarUrl(downloadUrl);
                mRef.set(profile)
                        .addOnSuccessListener(aVoid -> {
+                           User user = new User(
+                                   profile.getUserId(),
+                                   profile.getFirstName(),
+                                   profile.getLastName(),
+                                   profile.getEmail(),
+                                   profile.getPhoneNumber(),
+                                   profile.getAvatarUrl(),
+                                   "",
+                                   "",
+                                   profile.getSchool(),
+                                   "Teacher"
+                           );
+                           createUser(user);
                             isLoading.postValue(false);
                             successMsg.postValue("Profile created successfully");
                        }).addOnFailureListener(e -> {
@@ -83,6 +99,10 @@ public class UserRepository {
            errorMsg.postValue("Error occurred while uploading your profile photo.");
        });
 
+    }
+
+    private void createUser(@NotNull User user) {
+        firestore.collection("users").document(user.getUserId()).set(user);
     }
 
     public MutableLiveData<TeacherProfile> getProfile(String userId) {
