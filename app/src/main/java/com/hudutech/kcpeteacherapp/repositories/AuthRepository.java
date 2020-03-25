@@ -16,8 +16,11 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.hudutech.kcpeteacherapp.interfaces.LoginMethods;
 import com.hudutech.kcpeteacherapp.interfaces.SignUpMethods;
 import com.hudutech.kcpeteacherapp.models.TeacherProfile;
@@ -57,8 +60,10 @@ public class AuthRepository implements LoginMethods, SignUpMethods {
 
                     if (task.isSuccessful()) {
                         isLoading.postValue(false);
-                        successMsg.postValue("Login Successful.");
                         mCurrentUser.postValue(mAuth.getCurrentUser());
+                        setDeviceToken(mAuth.getCurrentUser());
+                        successMsg.postValue("Login Successful.");
+
 
                     } else {
                         String error = "Unable to Authenticate. please try again later";
@@ -83,8 +88,10 @@ public class AuthRepository implements LoginMethods, SignUpMethods {
                     if (task.isSuccessful()) {
 
                         isLoading.postValue(false);
-                        successMsg.postValue("Login Successful");
                         mCurrentUser.postValue(mAuth.getCurrentUser());
+                        setDeviceToken(mAuth.getCurrentUser());
+                        successMsg.postValue("Login Successful");
+
 
 
                     } else {
@@ -111,8 +118,10 @@ public class AuthRepository implements LoginMethods, SignUpMethods {
                     if (task.isSuccessful()) {
 
                         isLoading.postValue(false);
-                        successMsg.postValue("Login Successful");
                         mCurrentUser.postValue(mAuth.getCurrentUser());
+                        setDeviceToken(mAuth.getCurrentUser());
+                        successMsg.postValue("Login Successful");
+
 
                     } else {
                         isLoading.postValue(false);
@@ -148,8 +157,10 @@ public class AuthRepository implements LoginMethods, SignUpMethods {
                     if (task.isSuccessful()) {
                         //pass the account instance here
                         isLoading.postValue(false);
-                        successMsg.postValue("Account created successfully.");
                         mCurrentUser.postValue(mAuth.getCurrentUser());
+                        setDeviceToken(mAuth.getCurrentUser());
+                        successMsg.postValue("Account created successfully.");
+
 
 
                     } else {
@@ -179,8 +190,11 @@ public class AuthRepository implements LoginMethods, SignUpMethods {
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         isLoading.postValue(false);
-                        successMsg.postValue("Authentication Successful");
+                        setDeviceToken(mAuth.getCurrentUser());
                         mCurrentUser.postValue(mAuth.getCurrentUser());
+                        successMsg.postValue("Authentication Successful");
+
+
 
                     } else {
                         isLoading.postValue(false);
@@ -208,8 +222,10 @@ public class AuthRepository implements LoginMethods, SignUpMethods {
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         isLoading.postValue(false);
-                        successMsg.postValue("Authentication Successful");
                         mCurrentUser.postValue(mAuth.getCurrentUser());
+                        setDeviceToken(mAuth.getCurrentUser());
+                        successMsg.postValue("Authentication Successful");
+
 
                     } else {
                         isLoading.postValue(false);
@@ -249,5 +265,15 @@ public class AuthRepository implements LoginMethods, SignUpMethods {
         errorMsg.postValue("");
         successMsg.postValue("");
         isLoading.postValue(false);
+    }
+
+    private void setDeviceToken(FirebaseUser mCurrentUser) {
+        DatabaseReference mRef = FirebaseDatabase.getInstance().getReference("device_tokens");
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(instanceIdResult -> {
+            String token = instanceIdResult.getToken();
+
+            mRef.child(mCurrentUser.getUid()).child("deviceToken").setValue(token);
+
+        });
     }
 }
