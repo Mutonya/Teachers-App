@@ -60,7 +60,15 @@
 
         </activity>
         <activity android:name=".ui.livechat.MessagesActivity" />
-        <activity android:name=".ui.livechat.ChatActivity" />
+        <activity android:name=".ui.livechat.ChatActivity"
+            android:excludeFromRecents="true"
+            android:launchMode="singleTask"
+            android:taskAffinity="">
+            <intent-filter>
+                <action android:name="com.mkungusi.kcperevision_NOTIFICATION_TARGET" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
