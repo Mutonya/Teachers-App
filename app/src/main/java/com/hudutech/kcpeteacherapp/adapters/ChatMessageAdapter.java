@@ -14,13 +14,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.hudutech.kcpeteacherapp.R;
+import com.hudutech.kcpeteacherapp.databinding.ItemMessageReceivedBinding;
+import com.hudutech.kcpeteacherapp.databinding.ItemMessageSentBinding;
 import com.hudutech.kcpeteacherapp.models.ChatMessage;
-import com.mkungusi.kcperevision.Interfaces.RecyclerItemClickListener;
-import com.mkungusi.kcperevision.R;
-import com.mkungusi.kcperevision.databinding.ItemMessageReceivedBinding;
-import com.mkungusi.kcperevision.databinding.ItemMessageSentBinding;
-import com.mkungusi.kcperevision.models.ChatMessage;
-import com.mkungusi.kcperevision.models.User;
+import com.hudutech.kcpeteacherapp.models.User;
+
 
 public class ChatMessageAdapter extends ListAdapter<ChatMessage, RecyclerView.ViewHolder> implements RecyclerItemClickListener<ChatMessage> {
     private static final DiffUtil.ItemCallback<ChatMessage> DIFF_CALLBACK = new DiffUtil.ItemCallback<ChatMessage>() {
