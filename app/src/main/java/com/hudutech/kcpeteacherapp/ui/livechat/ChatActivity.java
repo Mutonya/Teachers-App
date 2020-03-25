@@ -31,11 +31,11 @@ import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.mkungusi.kcperevision.R;
-import com.mkungusi.kcperevision.adapters.ChatMessageAdapter;
-import com.mkungusi.kcperevision.databinding.ActivityChatBinding;
-import com.mkungusi.kcperevision.models.ChatMessage;
-import com.mkungusi.kcperevision.models.User;
+import com.hudutech.kcpeteacherapp.R;
+import com.hudutech.kcpeteacherapp.adapters.ChatMessageAdapter;
+import com.hudutech.kcpeteacherapp.databinding.ActivityChatBinding;
+import com.hudutech.kcpeteacherapp.models.ChatMessage;
+import com.hudutech.kcpeteacherapp.models.User;
 
 import java.util.ArrayList;
 import java.util.Date;

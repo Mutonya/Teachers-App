@@ -52,6 +52,7 @@
 
         </activity>
         <activity android:name=".ui.livechat.MessagesActivity" />
+        <activity android:name=".ui.livechat.ChatActivity" />
     </application>
 
 </manifest>
