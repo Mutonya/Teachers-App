@@ -51,6 +51,7 @@
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
+        <activity android:name=".ui.livechat.MessagesActivity" />
     </application>
 
 </manifest>

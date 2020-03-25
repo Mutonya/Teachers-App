@@ -26,6 +26,7 @@ import com.hudutech.kcpeteacherapp.interfaces.RecyclerItemClickListener;
 import com.hudutech.kcpeteacherapp.models.ChatMessage;
 import com.hudutech.kcpeteacherapp.models.Conversation;
 import com.hudutech.kcpeteacherapp.models.User;
+import com.hudutech.kcpeteacherapp.ui.livechat.ChatActivity;
 
 
 import java.util.List;

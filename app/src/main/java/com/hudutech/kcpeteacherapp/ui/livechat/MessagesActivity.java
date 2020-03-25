@@ -26,11 +26,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.mkungusi.kcperevision.R;
-import com.mkungusi.kcperevision.adapters.ConversationAdapter;
-import com.mkungusi.kcperevision.databinding.ActivityMessagesBinding;
-import com.mkungusi.kcperevision.models.Conversation;
-import com.mkungusi.kcperevision.ui.auth.LoginActivity;
+import com.hudutech.kcpeteacherapp.R;
+import com.hudutech.kcpeteacherapp.adapters.ConversationAdapter;
+import com.hudutech.kcpeteacherapp.databinding.ActivityMessagesBinding;
+import com.hudutech.kcpeteacherapp.models.Conversation;
+import com.hudutech.kcpeteacherapp.ui.accounts.AccountsBaseActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -130,7 +130,7 @@ public class MessagesActivity extends AppCompatActivity {
         super.onStart();
         if (mCurrentUser == null) {
             Toasty.warning(this, "Login Required.", Toast.LENGTH_SHORT, true).show();
-            startActivity(new Intent(this, LoginActivity.class));
+            startActivity(new Intent(this, AccountsBaseActivity.class));
             finish();
         }
 
