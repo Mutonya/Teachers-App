@@ -5,10 +5,10 @@
     <data>
         <variable
             name="review"
-            type="com.hudutech.kcpeteacherapp.models.StarReview"/>
+            type="com.klickit.kcpeteacherapp.models.StarReview"/>
         <variable
             name="user"
-            type="com.hudutech.kcpeteacherapp.models.User"/>
+            type="com.klickit.kcpeteacherapp.models.User"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

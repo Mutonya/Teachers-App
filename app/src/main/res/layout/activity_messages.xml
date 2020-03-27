@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.hudutech.mwalimuapp.views.MessagesActivity">
+    tools:context="com.klickit.mwalimuapp.views.MessagesActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -31,7 +31,7 @@
 
             </com.google.android.material.appbar.AppBarLayout>
 
-            <androidx.recyclerview.widget.RecyclerView xmlns:tools="http://schemas.android.com/tools"
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/chats"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

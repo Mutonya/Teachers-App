@@ -6,7 +6,7 @@
     app:startDestination="@+id/nav_login">
     <fragment
         android:id="@+id/nav_login"
-        android:name="com.hudutech.kcpeteacherapp.ui.accounts.LoginFragment"
+        android:name="com.klickit.kcpeteacherapp.ui.accounts.LoginFragment"
         android:label="@string/login"
 
         tools:layout="@layout/login_fragment">
@@ -25,7 +25,7 @@
 
     <fragment
         android:id="@+id/nav_register"
-        android:name="com.hudutech.kcpeteacherapp.ui.accounts.RegisterFragment"
+        android:name="com.klickit.kcpeteacherapp.ui.accounts.RegisterFragment"
         android:label="@string/register"
         tools:layout="@layout/register_fragment">
         <action
@@ -35,7 +35,7 @@
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.hudutech.kcpeteacherapp.ui.accounts.ProfileFragment"
+        android:name="com.klickit.kcpeteacherapp.ui.accounts.ProfileFragment"
         android:label="profile_fragment"
         tools:layout="@layout/profile_fragment"
 
@@ -48,7 +48,7 @@
     </fragment>
     <fragment
         android:id="@+id/accountPendingFragment"
-        android:name="com.hudutech.kcpeteacherapp.ui.accounts.AccountPendingFragment"
+        android:name="com.klickit.kcpeteacherapp.ui.accounts.AccountPendingFragment"
         android:label="account_pending_fragment"
         tools:layout="@layout/account_pending_fragment" />
 
