@@ -52,7 +52,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     };
     private ProgressDialog mProgress;
 
-    private Uri selectedPhotoUri;
+    private Uri selectedPhotoUri = null;
     private String gender;
 
     public static ProfileFragment newInstance() {
@@ -266,6 +266,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         if (gender.isEmpty()) {
             isValid = false;
             displayErrorMessage(requireContext(), "Select gender");
+        }
+        if (selectedPhotoUri == null ) {
+            isValid = false;
+            displayErrorMessage(requireContext(), "Please select a profile photo to continue");
         }
 
 

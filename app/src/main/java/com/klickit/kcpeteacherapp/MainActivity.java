@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,8 +15,6 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.afollestad.materialdialogs.DialogAction;
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -25,8 +22,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.klickit.kcpeteacherapp.ui.about.AboutActivity;
 import com.klickit.kcpeteacherapp.ui.accounts.AccountsBaseActivity;
 import com.klickit.kcpeteacherapp.ui.livechat.MessagesActivity;
-
-import es.dmoral.toasty.Toasty;
 
 public class MainActivity extends AppCompatActivity {
 
