@@ -44,4 +44,8 @@ public class ProfileViewModel extends AndroidViewModel {
     public void resetValues() {
         repository.resetValues();
     }
+
+    public void clear() {
+        repository.clear();
+    }
 }

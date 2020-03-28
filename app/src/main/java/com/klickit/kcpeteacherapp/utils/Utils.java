@@ -32,6 +32,24 @@ public class Utils {
     private static final String TAG = "Utils";
     private Utils() {}
 
+    public static String sanitizePhoneNumber(String phone) {
+        String validPhoneNumber = "";
+
+        if (phone.length() == 10 && phone.startsWith("0")) {
+            StringBuilder builder = new StringBuilder(phone);
+            String phoneWithoutLeadingZero = builder.deleteCharAt(0).toString();
+            validPhoneNumber = String.format("254%s", phoneWithoutLeadingZero);
+        }
+        if (phone.length() == 13 && phone.startsWith("+")) {
+            StringBuilder builder = new StringBuilder(phone);
+            validPhoneNumber = builder.deleteCharAt(0).toString();
+
+        } else if (phone.length() == 12 && phone.startsWith("254")) {
+            validPhoneNumber = phone;
+        }
+
+        return validPhoneNumber;
+    }
     public static ArrayList<Chip> getSkillsList() {
         ArrayList<Chip> skillChips = new ArrayList<>();
         skillChips.add(new Chip("Maths", "Mathematics"));

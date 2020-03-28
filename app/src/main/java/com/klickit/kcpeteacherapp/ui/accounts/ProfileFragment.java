@@ -186,6 +186,12 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mViewModel.clear();
+    }
+
     @RequiresApi(api = M)
     @Override
     public void onClick(View v) {
